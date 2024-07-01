@@ -1,3 +1,4 @@
+# your_app_name/serializers.py
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .models import EmployeeProfile, Attendance, Salary, Project, Leave

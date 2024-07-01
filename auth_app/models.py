@@ -3,6 +3,7 @@ from django.db import models
 from django.conf import settings
 
 class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
     groups = models.ManyToManyField(
         Group,
         related_name='customuser_groups',
@@ -19,6 +20,9 @@ class CustomUser(AbstractUser):
         verbose_name_plural = 'Custom Users'
         ordering = ['username']
 
+    def __str__(self):
+        return self.username
+
 
 class EmployeeProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -29,6 +33,9 @@ class EmployeeProfile(models.Model):
         verbose_name = 'Employee Profile'
         verbose_name_plural = 'Employee Profiles'
         ordering = ['user']
+
+    def __str__(self):
+        return f'{self.user.username} Profile'
 
 
 class Attendance(models.Model):
@@ -41,6 +48,9 @@ class Attendance(models.Model):
         verbose_name_plural = 'Attendance Records'
         ordering = ['-date']
 
+    def __str__(self):
+        return f'Attendance for {self.employee.username} on {self.date}'
+
 
 class Salary(models.Model):
     employee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -52,6 +62,9 @@ class Salary(models.Model):
         verbose_name_plural = 'Salary Records'
         ordering = ['-date']
 
+    def __str__(self):
+        return f'Salary {self.amount} for {self.employee.username} on {self.date}'
+
 
 class Project(models.Model):
     name = models.CharField(max_length=100)
@@ -62,6 +75,9 @@ class Project(models.Model):
         verbose_name = 'Project'
         verbose_name_plural = 'Projects'
         ordering = ['name']
+
+    def __str__(self):
+        return self.name
 
 
 class Leave(models.Model):
@@ -75,3 +91,6 @@ class Leave(models.Model):
         verbose_name = 'Leave Request'
         verbose_name_plural = 'Leave Requests'
         ordering = ['-start_date']
+
+    def __str__(self):
+        return f'Leave for {self.employee.username} from {self.start_date} to {self.end_date}'
