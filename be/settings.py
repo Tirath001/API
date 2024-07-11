@@ -7,12 +7,13 @@ SECRET_KEY = 'django-insecure-1@@_r%b2xk^cdi+t3vx*0e=##=8-t2rpt0w_!q@w@9^v9a3vy^
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['test.eptain.io', '93.127.194.228', '127.0.0.1']
+ALLOWED_HOSTS = ['test.eptain.io', '93.127.194.228', '127.0.0.1','eptain.io']
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
     'https://test.eptain.io',
+    'https://eptain.io',
     'http://93.127.194.228:8443',
 ]
 
@@ -30,7 +31,9 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'website',
     'jobportal',
-    'django_filters'
+    'django_filters',
+    'contact',
+    
 ]
 
 AUTH_USER_MODEL = 'auth_app.CustomUser'
@@ -82,8 +85,8 @@ WSGI_APPLICATION = 'be.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'u631126552_eptain', 
-        'USER': 'u631126552_eptain',   
+        'NAME': 'u631126552_test', 
+        'USER': 'u631126552_test',   
         'PASSWORD': 't!R@tSh123#',      
         'HOST': '185.224.137.180',      
         'PORT': '3306',                 
@@ -115,6 +118,8 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+GOOGLE_DRIVE_CREDENTIALS = os.path.join(BASE_DIR, '', 'awesome-aurora-428712-s2-cedef6551ddf.json')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = [
@@ -141,7 +146,7 @@ from datetime import timedelta
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': False,
+    'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': SECRET_KEY,
@@ -155,4 +160,12 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.hostinger.com'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'contact@eptain.io'  
+EMAIL_HOST_PASSWORD = 't!R@tSh12345@'
+
+# CORS Settings
 CORS_ALLOW_ALL_ORIGINS = True  # Ensure this is used if you intend to allow all origins

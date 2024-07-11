@@ -1,4 +1,3 @@
-# your_app_name/views.py
 from rest_framework import generics, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView

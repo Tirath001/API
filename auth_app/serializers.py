@@ -1,4 +1,3 @@
-# your_app_name/serializers.py
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .models import EmployeeProfile, Attendance, Salary, Project, Leave
@@ -40,28 +39,37 @@ class UserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('username', 'email')
+        extra_kwargs = {
+            'username': {'write_only': True},
+            'email': {'write_only': True}
+        }
 
 class EmployeeProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmployeeProfile
         fields = '__all__'
+        extra_kwargs = {field: {'write_only': True} for field in fields}
 
 class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attendance
         fields = '__all__'
+        extra_kwargs = {field: {'write_only': True} for field in fields}
 
 class SalarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Salary
         fields = '__all__'
+        extra_kwargs = {field: {'write_only': True} for field in fields}
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = '__all__'
+        extra_kwargs = {field: {'write_only': True} for field in fields}
 
 class LeaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Leave
         fields = '__all__'
+        extra_kwargs = {field: {'write_only': True} for field in fields}
